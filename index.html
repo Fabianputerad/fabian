@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Valentine</title>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBEzlrpKC3bHZq4ZDv_G8csf4MrLSIcZK0",
+      authDomain: "fabian-vals.firebaseapp.com",
+      projectId: "fabian-vals",
+      storageBucket: "fabian-vals.firebasestorage.app",
+      messagingSenderId: "1069171255923",
+      appId: "1:1069171255923:web:94aebb45c8f57c15205806"
+    };
+
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      let noClickCount = 0;
+      const noButton = document.getElementById("no");
+      const yesButton = document.getElementById("yes");
+      const formContainer = document.getElementById("formContainer");
+      const submitButton = document.getElementById("submitDate");
+      const dateInput = document.getElementById("dateInput");
+      const heartContainer = document.getElementById("heart-container");
+
+      noButton.addEventListener("click", function() {
+        noClickCount++;
+        yesButton.style.fontSize = (20 + noClickCount * 5) + "px";
+        if (noClickCount >= 10) {
+          noButton.style.display = "none";
+        }
+      });
+
+      yesButton.addEventListener("click", function() {
+        formContainer.style.display = "block";
+        createHearts();
+      });
+
+      submitButton.addEventListener("click", async function () {
+    const dateInput = document.getElementById("dateInput").value;
+    if (!dateInput) {
+      alert("Pilih tanggal terlebih dahulu!");
+      return;
+    }
+
+    try {
+      const docRef = await addDoc(collection(db, "valentine_dates"), {
+        date: dateInput,
+        timestamp: new Date()
+      });
+      alert("Tanggal berhasil disimpan! 🎉");
+      console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert("Gagal menyimpan data. Cek console untuk detail.");
+    }
+  });
+      function createHearts() {
+        for (let i = 0; i < 20; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("heart");
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+          heartContainer.appendChild(heart);
+          setTimeout(() => { heart.remove(); }, 4000);
+        }
+      }
+    });
+  </script>
+  <style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      text-align: center;
+      font-family: 'Arial', sans-serif;
+      background-color: #ffccdc;
+      margin-top: 50px;
+      padding: 0 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 32px;
+      color: #d6336c;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    button {
+      font-size: 20px;
+      padding: 12px 24px;
+      margin: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+    #yes {
+      background-color: #ff4d79;
+      color: white;
+    }
+    #no {
+      background-color: black;
+      color: white;
+    }
+    #formContainer {
+      display: none;
+      margin-top: 20px;
+    }
+    #heart-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: red;
+      clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 50% 80%, 20% 100%, 0% 35%);
+      animation: float 4s linear infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="heart-container"></div>
+  <h1>💖 Happy Valentine Anna!! Mau jalan gaa? 💖</h1>
+  <div class="buttons">
+    <button id="yes">Mau 💕</button>
+    <button id="no">Tidak 😢</button>
+  </div>
+  <div id="formContainer">
+    <h2>Pilih tanggal jalan:</h2>
+    <input type="date" id="dateInput">
+    <button id="submitDate">Kirim</button>
+  </div>
+</body>
+</html>
