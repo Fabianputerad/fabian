@@ -1,9 +1,36 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-W24JXQ2G');</script>
+  <!-- End Google Tag Manager -->
+  
+  <!-- Debug Script -->
+  <script>
+    // Cek apakah GTM script berhasil load
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        console.log('=== GTM DEBUG INFO ===');
+        console.log('window.google_tag_manager:', !!window.google_tag_manager);
+        console.log('window.dataLayer:', window.dataLayer);
+        console.log('GTM Container loaded:', !!window.google_tag_manager?.['GTM-W24JXQ2G']);
+        
+        // Test network connectivity
+        console.log('Testing network connectivity to Google...');
+        fetch('https://www.google-analytics.com/debug/collect', {method: 'HEAD'})
+          .then(() => console.log('✅ Network to Google Analytics: OK'))
+          .catch(() => console.log('❌ Network to Google Analytics: FAILED'));
+      }, 2000);
+    });
+  </script>
+  
   <meta charset="UTF-8">
-  <title>FABIAN TES</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAII - Valentine Special</title>
   <meta name="description" content="Valentine special page">
   <meta name="keywords" content="valentine, date, ice cream, jalan-jalan">
   <meta name="author" content="Fabian">
@@ -12,14 +39,6 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://fabianputerad.github.io/fabian/">
   <meta name="robots" content="index, follow">
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-W24JXQ2G');</script>
-<!-- End Google Tag Manager -->
-  <title>HAII - Valentine Special</title>
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
@@ -53,13 +72,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     const db = getFirestore(app);
 
     document.addEventListener("DOMContentLoaded", () => {
-      // Kirim page view ke GTM saat halaman load
+      // Debug: Cek apakah GTM sudah load
+      console.log('GTM Container ID: GTM-W24JXQ2G');
+      console.log('dataLayer exists:', !!window.dataLayer);
+      console.log('Current dataLayer:', window.dataLayer);
+      
+      // Test manual push untuk memastikan dataLayer bekerja
       window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        'event': 'debug_test',
+        'debug_info': 'GTM integration test'
+      });
+      
+      // Kirim page view ke GTM saat halaman load
       window.dataLayer.push({
         'event': 'page_view',
         'page_title': document.title,
         'page_location': window.location.href
       });
+      
+      console.log('Page view event sent');
+      console.log('Updated dataLayer:', window.dataLayer);
 
       let noClickCount = 0;
       const noButton = document.getElementById("no");
