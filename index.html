@@ -2,7 +2,16 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <title>FABIAN TES</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Valentine special page">
+  <meta name="keywords" content="valentine, date, ice cream, jalan-jalan">
+  <meta name="author" content="Fabian">
+  <meta property="og:title" content="HAII - Valentine Special">
+  <meta property="og:description" content="Semangat Vinka! Nanti dapet es krim sama jalan-jalan">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fabianputerad.github.io/fabian/">
+  <meta name="robots" content="index, follow">
   <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -10,7 +19,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-W24JXQ2G');</script>
 <!-- End Google Tag Manager -->
-  <title>HAII</title>
+  <title>HAII - Valentine Special</title>
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "HAII - Valentine Special",
+    "description": "Semangat Vinka! Nanti dapet es krim sama jalan-jalan",
+    "url": "https://fabianputerad.github.io/fabian/",
+    "author": {
+      "@type": "Person",
+      "name": "Fabian"
+    }
+  }
+  </script>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -30,6 +53,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     const db = getFirestore(app);
 
     document.addEventListener("DOMContentLoaded", () => {
+      // Kirim page view ke GTM saat halaman load
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        'event': 'page_view',
+        'page_title': document.title,
+        'page_location': window.location.href
+      });
+
       let noClickCount = 0;
       const noButton = document.getElementById("no");
       const yesButton = document.getElementById("yes");
@@ -50,11 +81,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         // Kirim event ke Google Tag Manager
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
-          'event': 'click-mau',
-          'event_name': 'click-mau',
-          'data-gtm-group': 'click-mau',
-          'data-gtm-value': 'mau-button-clicked'
+          'event': 'click_mau',
+          'event_category': 'button',
+          'event_action': 'click',
+          'event_label': 'mau_button'
         });
+        
+        // Debug log
+        console.log('DataLayer event sent:', {
+          'event': 'click_mau',
+          'event_category': 'button',
+          'event_action': 'click',
+          'event_label': 'mau_button'
+        });
+        console.log('Current dataLayer:', window.dataLayer);
       
         formContainer.style.display = "block";
         createHearts();
