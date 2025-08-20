@@ -47,6 +47,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       });
 
       yesButton.addEventListener("click", function() {
+        // Kirim event ke Google Tag Manager
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': 'click_mau',
+          'event_name': 'click_mau',
+          'gtm_data_group': 'click-mau',
+          'gtm_data_value': 'mau_button_clicked'
+        });
+        
         formContainer.style.display = "block";
         createHearts();
       });
